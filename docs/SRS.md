@@ -38,13 +38,14 @@ This Software Requirements Specification (SRS) describes all software requiremen
 LeaveBetter is developed as a responsive, phone-friendly web application. The platform connects travelers and locals with communities in need, allowing users to report local aid needs and volunteers to find and fulfill them.
 
 The system consists of the following subsystems:
-- **Reporting System:** Users can report local shortages (such as clean water, school supplies, or medicine) using a structured form and location tags.
-- **Verification & Moderation System:** Community moderators review incoming reports to prevent scams, duplicates, and fake requests before they appear publicly.
-- **Interactive Map & Discovery System:** An interactive map powered by external map services displays verified need locations with visual pins categorized by urgency.
-- **Fulfillment & Matching System:** Volunteers can choose a need, pledge support or items, and update the status of the request until it is solved.
-- **Account & Profile System:** Manages user identities for reporters, volunteers, and moderators.
+- **Reporting system:** Users can report local shortages (such as clean water, school supplies, or medicine) using a structured form and location tags.
+- **Verification and moderation system:** Community moderators review incoming reports to prevent scams, duplicates, and fake requests before they appear publicly.
+- **Interactive map and discovery system:** An interactive map powered by external map services displays verified need locations with visual pins categorized by urgency.
+- **Fulfillment and matching system:** Volunteers can choose a need, pledge support or items, and update the status of the request until it is solved.
+- **Account and profile system:** Manages user identities for reporters, volunteers, and moderators.
 
 ### 1.3 Definitions, Acronyms and Abbreviations
+
 | Abbreviation | Explanation |
 | :--- | :--- |
 | **SRS** | Software Requirements Specification |
@@ -76,18 +77,18 @@ Inspired by mutual-aid networks and responsible travel ideas, LeaveBetter connec
 
 ![Overall Use Case Diagram](./assets/)
 
-- **Planned until December (MVP / Core Deliverables):**
-  - UC1: Submit Aid Need
-  - UC2: Upload Photo Evidence
-  - UC3: Geotag Location on Map
-  - UC4: Review Pending Reports
-  - UC5: Validate Need
-  - UC7: Browse Needs on Map
-- **Planned until June (Extended Features):**
-  - UC6: Flag Scam / Inappropriate Content
-  - UC8: Filter by Category and Urgency
-  - UC9: Offer Aid Commitment
-  - UC10: Update Fulfillment Status
+- **MVP / Core deliverables:**
+  - UC1: Submit aid need
+  - UC2: Upload photo evidence
+  - UC3: Geotag location on map
+  - UC4: Review pending reports
+  - UC5: Validate need
+  - UC7: Browse needs on map
+- **Extended features:**
+  - UC6: Flag scam / inappropriate content
+  - UC8: Filter by category and urgency
+  - UC9: Offer aid commitment
+  - UC10: Update fulfillment status
 
 ### 2.3 Technology Stack
 The platform uses the following technologies:
@@ -117,53 +118,53 @@ The platform uses the following technologies:
 ## 3. Specific Requirements
 
 ### 3.1 Functionality
-This section describes the use cases shown in the Use Case Diagram.
+This section describes the main use cases shown in the Use Case Diagram.
 
-#### Planned until December:
+#### Core deliverables:
 
-##### 3.1.1 Submit Aid Need (UC1)
-This is the core feature of the platform. A traveler or local reporter can submit an aid request. The user chooses a category (such as Water, Education, or Health), sets the urgency level, enters a description, and sets the location.
+##### 3.1.1 Submit aid need (UC1)
+This is the core feature of the platform. A traveler or local reporter can submit an aid request. The user chooses a category (such as qater, education, or health), sets the urgency level, enters a description, and sets the location.
 
-##### 3.1.2 Upload Verification Photo (UC2)
+##### 3.1.2 Upload verification photo (UC2)
 When submitting an aid request, the reporter can optionally attach an image as proof. This helps moderators verify that the request is genuine.
 
-##### 3.1.3 Geotag Location on Map (UC3)
+##### 3.1.3 Geotag location on map (UC3)
 When creating a report, the location must be specified. The system uses map coordinates (latitude and longitude) to place a pin accurately on the map.
 
-##### 3.1.4 Review Pending Reports (UC4)
+##### 3.1.4 Review pending reports (UC4)
 To prevent scams and inaccurate information, all newly submitted reports enter a review queue. Moderators can access this list to inspect details before public display.
 
-##### 3.1.5 Validate Need (UC5)
+##### 3.1.5 Validate need (UC5)
 A moderator checks the report description and photo. If valid, the moderator marks the request as verified, making it visible to volunteers on the public map.
 
-##### 3.1.6 Browse Needs on Map (UC7)
+#### Extended features:
+
+##### 3.1.6 Browse needs on map (UC7)
 Volunteers and travelers can open an interactive map to see active needs pinned across different regions. Clicking a pin opens a summary card with details.
 
-#### Planned until June:
-
-##### 3.1.7 Flag Inappropriate Content or Scams (UC6)
+##### 3.1.7 Flag inappropriate content or scams (UC6)
 Moderators can flag, reject, or remove posts that violate platform guidelines or appear to be fraudulent.
 
-##### 3.1.8 Filter by Urgency and Category (UC8)
-Volunteers can filter map markers by category (e.g., only "Clean Water") or urgency (e.g., "Critical") to find relevant requests quickly.
+##### 3.1.8 Filter by urgency and category (UC8)
+Volunteers can filter map markers by category (e.g., only "Clean water") or urgency (e.g., "Critical") to find relevant requests quickly.
 
-##### 3.1.9 Offer Aid Commitment (UC9)
+##### 3.1.9 Offer aid commitment (UC9)
 A volunteer can click an "Offer Aid" button on a verified request to state what supplies or time they can provide, notifying the original poster.
 
-##### 3.1.10 Update Fulfillment Status (UC10)
+##### 3.1.10 Update fulfillment status (UC10)
 Once aid is delivered, the status of the ticket can be updated from "In Progress" to "Resolved" to keep the map clean and up to date.
 
 ---
 
 ### 3.2 Usability
 
-#### 3.2.1 Intuitive Mobile-First Design
+#### 3.2.1 Intuitive mobile-first design
 The user interface is designed to work smoothly on mobile web browsers so travelers can easily use it on the go.
 
-#### 3.2.2 Fast Submission Flow
+#### 3.2.2 Fast submission flow
 Submitting an aid report takes under 3 minutes and requires no technical training or complex forms.
 
-#### 3.2.3 Clear Visual Indicators
+#### 3.2.3 Clear visual indicators
 Map markers use simple, standard colors based on urgency:
 - Red: Critical / Immediate
 - Yellow: Medium urgency
@@ -173,59 +174,59 @@ Map markers use simple, standard colors based on urgency:
 
 ### 3.3 Reliability
 
-#### 3.3.1 High Availability
+#### 3.3.1 High availability
 The web platform aims for 95% availability during normal development cycles.
 
-#### 3.3.2 Data Integrity
+#### 3.3.2 Data integrity
 No need report can be created without valid geographical coordinates and a valid category.
 
 ---
 
 ### 3.4 Performance
 
-#### 3.4.1 Map Load Speed
+#### 3.4.1 Map load speed
 The interactive map should load and display up to 100 markers within 2 seconds on a regular mobile connection.
 
-#### 3.4.2 API Response Time
+#### 3.4.2 API response time
 Backend REST API endpoints should return JSON responses within 300 ms for common database queries.
 
 ---
 
 ### 3.5 Supportability
 
-#### 3.5.1 Clean Code and MVC Architecture
+#### 3.5.1 Clean code and MVC architecture
 The system strictly separates concerns:
 - **Model:** Django ORM handles database models.
 - **View:** React renders the user interface.
 - **Controller:** Django REST APIs route requests and connect data to views.
 
-#### 3.5.2 AI Tool Usage Guidelines
+#### 3.5.2 AI Tool usage guidelines
 All team members adhere to established AI policies: prompt requests must be clear, and every piece of AI-generated code or text must be reviewed and tested by a human.
 
 ---
 
-### 3.6 Design Constraints
+### 3.6 Design constraints
 - **Architecture:** Decoupled frontend (React) and backend (Django) communicating via RESTful JSON APIs.
 - **Repository Structure:** Documentation files must stay strictly under `/docs` and runtime code under `/src`.
 - **Supported Browsers:** Chrome, Firefox, Safari, and Edge (both mobile and desktop).
 
 ---
 
-### 3.7 Online User Documentation and Help System Requirements
+### 3.7 Online user documentation and help system requirements
 The interface is self-explanatory. An "About & Safety" page explains how the verification process works, along with a simple contact link for user support.
 
-### 3.8 Purchased Components
+### 3.8 Purchased components
 No commercial components are purchased. The system uses open-source libraries and the free development tier of Google Maps Platform.
 
 ---
 
 ### 3.9 Interfaces
 
-#### 3.9.1 User Interfaces
-- **Map Discovery View:** The main screen showing the interactive map, pins, and filters.
-- **Report Submission Form:** Form to enter details, upload photos, and pick a location.
-- **Moderator Dashboard:** Queue interface for moderators to review, approve, or reject submissions.
-- **Need Detail Card:** Pop-up card showing full details, items needed, and the status button.
+#### 3.9.1 User interfaces
+- **Map discovery view:** The main screen showing the interactive map, pins, and filters.
+- **Report Submission form:** Form to enter details, upload photos, and pick a location.
+- **Moderator dashboard:** Queue interface for moderators to review, approve, or reject submissions.
+- **Need detail card:** Pop-up card showing full details, items needed, and the status button.
 
 #### 3.9.2 Hardware Interfaces
 *(n/a)*
@@ -240,13 +241,13 @@ No commercial components are purchased. The system uses open-source libraries an
 
 ---
 
-### 3.10 Licensing Requirements
+### 3.10 Licensing requirements
 The project is licensed under the open-source MIT License.
 
-### 3.11 Legal, Copyright and Other Notices
+### 3.11 Legal, copyright and other notices
 User privacy is respected; personal contact details are kept private and are not displayed on public map endpoints.
 
-### 3.12 Applicable Standards
+### 3.12 Applicable standards
 Development follows clean code principles, PEP 8 standards for Python, and standard Git branch naming conventions.
 
 ---
