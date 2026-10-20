@@ -38,11 +38,11 @@ This Software Requirements Specification (SRS) describes all software requiremen
 LeaveBetter is developed as a responsive, phone-friendly web application. The platform connects travelers and locals with communities in need, allowing users to report local aid needs and volunteers to find and fulfill them.
 
 The system consists of the following subsystems:
-- **Reporting system:** Users can report local shortages (such as clean water, school supplies, or medicine) using a structured form and location tags.
-- **Verification and moderation system:** Community moderators review incoming reports to prevent scams, duplicates, and fake requests before they appear publicly.
-- **Interactive map and discovery system:** An interactive map powered by external map services displays verified need locations with visual pins categorized by urgency.
+- **Account system:** Every user must register and log in, so that all reports, flags and aid offers are linked to an identified person.
+- **Reporting system:** Users can report local shortages (such as clean water, school supplies, or medicine) using a structured form, an optional photo and a location on the map.
+- **Verification and moderation system:** Moderators review new reports and reports flagged by users. They validate or reject them, and can block users who abuse the platform.
+- **Interactive map and discovery system:** An interactive map powered by Google Maps displays verified needs as pins categorized by urgency, with filters.
 - **Fulfillment and matching system:** Volunteers can choose a need, pledge support or items, and update the status of the request until it is solved.
-- **Account and profile system:** Manages user identities for reporters, volunteers, and moderators.
 
 ### 1.3 Definitions, Acronyms and Abbreviations
 
@@ -56,6 +56,10 @@ The system consists of the following subsystems:
 | **SPA** | Single Page Application |
 | **n/a** | Not applicable |
 | **tbd** | To be determined |
+| **GDPR** | General Data Protection Regulation (EU data protection law) |
+| **Reporter** | The user who submitted a given aid request |
+| **Volunteer** | Any other logged-in user who looks at or offers help on that request |
+| **Under review** | Warning marker shown on a request that was flagged and is being checked by moderators |
 
 ### 1.4 References
 | Title | Date | Publishing Organization |
@@ -75,20 +79,27 @@ Inspired by mutual-aid networks and responsible travel ideas, LeaveBetter connec
 
 ### 2.2 Use Case Diagram
 
-![Overall Use Case Diagram](./assets/)
+![Overall Use Case Diagram](./assets/UseCaseDiagram.png)
+
+**Actors:** Reporter, Volunteer and Moderator are roles of a registered user. A user is the Reporter of the requests they submitted and a Volunteer on requests submitted by others. The **Google Maps API** is an external (secondary) actor used for geocoding and map display.
 
 - **MVP / Core deliverables:**
+  - UC12: Register an account
+  - UC13: Log in
   - UC1: Submit aid need
   - UC2: Upload photo evidence
   - UC3: Geotag location on map
-  - UC4: Review pending reports
+  - UC4: Review pending and flagged reports
   - UC5: Validate need
   - UC7: Browse needs on map
+ 
 - **Extended features:**
-  - UC6: Flag scam / inappropriate content
+  - UC6: Flag a report
   - UC8: Filter by category and urgency
   - UC9: Offer aid commitment
   - UC10: Update fulfillment status
+  - UC11: Reject report
+  - UC14: Block user
 
 ### 2.3 Technology Stack
 The platform uses the following technologies:
@@ -118,41 +129,55 @@ The platform uses the following technologies:
 ## 3. Specific Requirements
 
 ### 3.1 Functionality
-This section describes the main use cases shown in the Use Case Diagram.
+This section describes the main use cases shown in the Use Case Diagram. Every use case except UC12 and UC13 requires that the user is logged in.
+
+**Request statuses:** Pending Review, Verified, In Progress, Resolved, Rejected. In addition, a Verified or In Progress request can carry the marker **Under review** while moderators check a flag.
 
 #### Core deliverables:
 
-##### 3.1.1 Submit aid need (UC1)
-This is the core feature of the platform. A traveler or local reporter can submit an aid request. The user chooses a category (such as qater, education, or health), sets the urgency level, enters a description, and sets the location.
+##### 3.1.1 Register an account (UC12)
+Every user must register before using the platform, so that each report, flag and aid offer can be linked to an identified person. The user registers with an email address and a password; a phone number is tbd.
 
-##### 3.1.2 Upload verification photo (UC2)
+##### 3.1.2 Log in (UC13)
+Registered users log in to use the platform. Moderators log in with moderator privileges.
+
+##### 3.1.3 Submit aid need (UC1)
+This is the core feature of the platform. A reporter submits an aid request. The user chooses a category (such as water, education, or health), sets the urgency level, enters a description, and sets the location. New requests get the status Pending Review.
+
+##### 3.1.4 Upload verification photo (UC2)
 When submitting an aid request, the reporter can optionally attach an image as proof. This helps moderators verify that the request is genuine.
 
-##### 3.1.3 Geotag location on map (UC3)
-When creating a report, the location must be specified. The system uses map coordinates (latitude and longitude) to place a pin accurately on the map.
+##### 3.1.5 Geotag location on map (UC3)
+When creating a report, the location must be specified. The system uses the Google Maps API to convert an address into coordinates and to place a pin accurately on the map. If this fails, the user picks the location manually on the map.
 
-##### 3.1.4 Review pending reports (UC4)
-To prevent scams and inaccurate information, all newly submitted reports enter a review queue. Moderators can access this list to inspect details before public display.
+##### 3.1.6 Review pending and flagged reports (UC4)
+To prevent scams and inaccurate information, all new reports enter a review queue. Reports flagged by users also appear in this queue. Moderators inspect the details before a report is shown publicly or while it is under review.
 
-##### 3.1.5 Validate need (UC5)
-A moderator checks the report description and photo. If valid, the moderator marks the request as verified, making it visible to volunteers on the public map.
+##### 3.1.7 Validate need (UC5)
+A moderator checks the report description and photo. If valid, the moderator marks the request as Verified and it becomes visible on the public map. If the moderator checks a flagged report and finds it genuine, the flag is dismissed and the "Under review" marker disappears.
+
+##### 3.1.8 Browse needs on map (UC7)
+Every logged-in user can open the interactive map to see active needs. A user can be a Reporter and a Volunteer at the same time. Clicking a pin opens a summary card with details.
 
 #### Extended features:
 
-##### 3.1.6 Browse needs on map (UC7)
-Volunteers and travelers can open an interactive map to see active needs pinned across different regions. Clicking a pin opens a summary card with details.
+##### 3.1.9 Flag a report (UC6)
+A logged-in user can flag a report that looks like a scam, a duplicate or inappropriate. The user cannot flag their own report. Each user can only flag a limited number of reports per week (limit tbd, for example 5) to prevent spam and fake flags. A flagged report stays visible, but shows the marker "Under review", so other users know it is being checked. A flag is not a decision: only a moderator can confirm a scam.
 
-##### 3.1.7 Flag inappropriate content or scams (UC6)
-Moderators can flag, reject, or remove posts that violate platform guidelines or appear to be fraudulent.
+##### 3.1.10 Reject report (UC11)
+If a moderator confirms that a report is fraudulent, a duplicate or violates the guidelines, the moderator rejects it with a reason. The status changes to Rejected and the report is hidden from the public map.
 
-##### 3.1.8 Filter by urgency and category (UC8)
-Volunteers can filter map markers by category (e.g., only "Clean water") or urgency (e.g., "Critical") to find relevant requests quickly.
+##### 3.1.11 Filter by urgency and category (UC8)
+Users can filter map markers by category (e.g., only "Clean water") or urgency (e.g., "Critical") to find relevant requests quickly.
 
-##### 3.1.9 Offer aid commitment (UC9)
-A volunteer can click an "Offer Aid" button on a verified request to state what supplies or time they can provide, notifying the original poster.
+##### 3.1.12 Offer aid commitment (UC9)
+A user can click an "Offer Aid" button on a verified request to state what supplies or time they can provide, notifying the Reporter. A user cannot offer aid on their own request. If the request is marked "Under review", the system first shows a warning message and the user must confirm before continuing.
 
-##### 3.1.10 Update fulfillment status (UC10)
-Once aid is delivered, the status of the ticket can be updated from "In Progress" to "Resolved" to keep the map clean and up to date.
+##### 3.1.13 Update fulfillment status (UC10)
+Once aid is delivered, the Reporter of the request or the Volunteer who committed can change the status from "In Progress" to "Resolved". Resolved requests are archived and no longer shown on the map.
+
+##### 3.1.14 Block user (UC14)
+If a user repeatedly abuses the platform (for example, with fake flags or scam reports), a moderator can block the account and the user's email address and phone number, so they cannot be used to register again. This makes abuse harder but cannot fully prevent it, because a person can use a new email address or phone number. Blocking whole email domains is not planned, because it would also block honest users. How blocked data is stored and for how long is tbd (see 3.11).
 
 ---
 
@@ -168,7 +193,9 @@ Submitting an aid report takes under 3 minutes and requires no technical trainin
 Map markers use simple, standard colors based on urgency:
 - Red: Critical / Immediate
 - Yellow: Medium urgency
-- Green: In progress or resolved
+- Green: In progress
+
+A request that is flagged shows a small warning icon on its marker and on its detail card with the text "Under review". The icon is used instead of a new color, so it also works for color-blind users.
 
 ---
 
@@ -209,6 +236,7 @@ All team members adhere to established AI policies: prompt requests must be clea
 - **Architecture:** Decoupled frontend (React) and backend (Django) communicating via RESTful JSON APIs.
 - **Repository Structure:** Documentation files must stay strictly under `/docs` and runtime code under `/src`.
 - **Supported Browsers:** Chrome, Firefox, Safari, and Edge (both mobile and desktop).
+- **Security and abuse prevention:** Concrete measures against fraud (for example flag limits, user blocking, and photo checks) are described in the use cases. Further security requirements will be added in a later phase.
 
 ---
 
@@ -223,10 +251,12 @@ No commercial components are purchased. The system uses open-source libraries an
 ### 3.9 Interfaces
 
 #### 3.9.1 User interfaces
+- **Register and login pages:** Forms to create an account and to log in.
 - **Map discovery view:** The main screen showing the interactive map, pins, and filters.
-- **Report Submission form:** Form to enter details, upload photos, and pick a location.
-- **Moderator dashboard:** Queue interface for moderators to review, approve, or reject submissions.
-- **Need detail card:** Pop-up card showing full details, items needed, and the status button.
+- **Report submission form:** Form to enter details, upload photos, and pick a location.
+- **Need detail card:** Pop-up card showing full details, the "Under review" marker, and the buttons "Offer Aid", "Flag" and "Mark as Resolved".
+- **Warning dialog:** Message shown before a user offers aid on a request that is under review.
+- **Moderator dashboard:** Queue interface for moderators to review pending and flagged reports, to validate or reject them, and to block users.
 
 #### 3.9.2 Hardware Interfaces
 *(n/a)*
@@ -245,7 +275,13 @@ No commercial components are purchased. The system uses open-source libraries an
 The project is licensed under the open-source MIT License.
 
 ### 3.11 Legal, copyright and other notices
-User privacy is respected; personal contact details are kept private and are not displayed on public map endpoints.
+LeaveBetter processes personal data such as email addresses, phone numbers, locations and photos, so the **GDPR** applies. Contact details are kept private and are not displayed on public map endpoints.
+
+Points to be worked out in a later phase:
+- Which data is collected and why, and a privacy policy for users.
+- Photos can contain location data or show people; they should be checked or cleaned before they are shown.
+- Blocked users: only the data needed to prevent re-registration is stored (for example, a hash of the email and phone number), with a defined retention period and a way to appeal.
+- A way for users to delete their account and data.
 
 ### 3.12 Applicable standards
 Development follows clean code principles, PEP 8 standards for Python, and standard Git branch naming conventions.
