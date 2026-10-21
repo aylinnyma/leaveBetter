@@ -79,7 +79,7 @@ Inspired by mutual-aid networks and responsible travel ideas, LeaveBetter connec
 
 ### 2.2 Use Case Diagram
 
-![Overall Use Case Diagram](./assets/UseCaseDiagram.png)
+![Overall Use Case Diagram](../assets/UseCaseDiagram.png)
 
 **Actors:** Reporter, Volunteer and Moderator are roles of a registered user. A user is the Reporter of the requests they submitted and a Volunteer on requests submitted by others. The **Google Maps API** is an external (secondary) actor used for geocoding and map display.
 
