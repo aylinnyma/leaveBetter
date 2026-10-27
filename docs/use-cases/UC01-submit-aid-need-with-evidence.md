@@ -9,7 +9,7 @@
 
 | Version | Date       | Description   | Author |
 |---------|------------|---------------|--------|
-| 0.1     | 2026-10-27 | Initial draft | <Aylin> |
+| 0.1     | 2026-10-27 | Initial draft | Aylin |
 
 ## 1. Use-Case Name
 

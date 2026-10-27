@@ -11,7 +11,8 @@
 - [2. Overall Description](#2-overall-description)
     - [2.1 Vision](#21-vision)
     - [2.2 Use Case Diagram](#22-use-case-diagram)
-    - [2.3 Technology Stack](#23-technology-stack)
+    - [2.3 Use Cases](#23-use-cases) 
+    - [2.4 Technology Stack](#24-technology-stack)
 - [3. Specific Requirements](#3-specific-requirements)
     - [3.1 Functionality](#31-functionality)
     - [3.2 Usability](#32-usability)
@@ -101,7 +102,14 @@ Inspired by mutual-aid networks and responsible travel ideas, LeaveBetter connec
   - UC11: Reject report
   - UC14: Block user
 
-### 2.3 Technology Stack
+### 2.3 Use Cases
+
+| ID  | Use Case                         | CRUD   | Link                                                      |
+|-----|----------------------------------|--------|-----------------------------------------------------------|
+| UC1 | Submit aid need with evidence    | Create | [UC1](use-cases/UC01-submit-aid-need-with-evidence.md)    |
+| UC5 | Validate need                    | Update | [UC5](use-cases/UC05-validate-need.md)                    |
+
+### 2.4 Technology Stack
 The platform uses the following technologies:
 
 **Backend:**
