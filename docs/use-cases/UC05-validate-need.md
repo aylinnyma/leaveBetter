@@ -8,7 +8,7 @@
 
 | Version | Date       | Description   | Author |
 |---------|------------|---------------|--------|
-| 0.1     | 2026-10-27 | Initial draft | <name> |
+| 0.1     | 2026-10-27 | Initial draft | Aylin |
 
 ## 1. Use-Case Name
 
@@ -22,11 +22,11 @@ _To be added together with the .feature files._
 
 ### 2.1 Wireframe
 
-![UC5 wireframe – review screen](img/uc05-wireframe.png)
+![UC5 wireframe – review screen](img/uc05-wireframe.webp)
 
 ### 2.2 Activity Diagram
 
-![UC5 activity diagram](img/uc05-activity.png)
+![UC5 activity diagram](img/uc05-diagram.webp)
 
 ### 2.3 Basic Flow
 
@@ -60,7 +60,6 @@ _To be added together with the .feature files._
 
 ## 3. Special Requirements
 
-_(Proposed – adjust to your SRS)_
 - Each decision is logged with Moderator, date/time and, if rejected, the reason.
 
 ## 4. Preconditions
