@@ -26,7 +26,7 @@ _To be added together with the .feature files._
 
 ### 2.2 Activity Diagram
 
-![UC5 activity diagram](img/uc05-diagram.webp)
+![UC5 activity diagram](img/uc05-diagram.png)
 
 ### 2.3 Basic Flow
 
