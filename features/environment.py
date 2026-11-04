@@ -1,11 +1,14 @@
 # features/environment.py
-from selenium import webdriver
 
 def before_all(context):
-    # open the browser before testing
-    context.browser = webdriver.Chrome()
-    context.browser.implicitly_wait(5)
+    # Browser only when we run: behave -D browser=chrome
+    context.use_browser = context.config.userdata.get("browser") == "chrome"
+    if context.use_browser:
+        from selenium import webdriver
+        context.browser = webdriver.Chrome()
+        context.browser.implicitly_wait(5)
+
 
 def after_all(context):
-    # close the browser
-    context.browser.quit()
+    if getattr(context, "use_browser", False):
+        context.browser.quit()
