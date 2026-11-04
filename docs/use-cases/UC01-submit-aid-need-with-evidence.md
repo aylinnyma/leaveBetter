@@ -10,6 +10,7 @@
 | Version | Date       | Description   | Author |
 |---------|------------|---------------|--------|
 | 0.1     | 2026-10-27 | Initial draft | Aylin |
+| 0.2     | 2026-11-04 | Brief description update| Aylin |
 
 ## 1. Use-Case Name
 
@@ -17,7 +18,9 @@ Submit aid need with evidence
 
 ### 1.1 Brief Description
 
-_To be added together with the .feature files._
+A logged-in Reporter submits a community aid need with a description, a category and evidence (photos or documents). The system validates the input, geotags the location (UC3) and saves the need as "Pending Review" so a Moderator can check it before it becomes visible on the map.
+
+Behavior as executable scenarios: [UC1 feature file](../features/UC01_submit_aid_need.feature)
 
 ## 2. Flow of Events
 
