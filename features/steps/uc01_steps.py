@@ -1,15 +1,10 @@
 from behave import given, when, then
 from selenium.webdriver.common.by import By
 
-<<<<<<< HEAD
 @given('The Reporter is logged in')
 def step_impl(context):
 
     print("-> Reporter is logged in successfully.")
-=======
-ALLOWED_TYPES = (".jpg", ".png", ".pdf")
->>>>>>> 6626d1b1980a2227c62061565f330f0bbfe67896
-
 
 @given('the Reporter is registered and logged in')
 def step_logged_in(context):
