@@ -1,8 +1,9 @@
 from behave import given, when, then
+from selenium.webdriver.common.by import By
 
 @given('The Reporter is logged in')
 def step_impl(context):
-    
+
     print("-> Reporter is logged in successfully.")
 
 @given('The report form is open')
