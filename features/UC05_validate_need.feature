@@ -1,48 +1,65 @@
-Feature: Use Case 5 Validate need
+Feature: UC5 Validate need
   As a Moderator
-  I want to review pending reports and validate or reject them
-  Therefore I want the fields: review queue, approval action, rejection reason and explanation able to be processed
+  I want to review pending needs and approve or reject them
+  So that only verified needs are published on the map
 
   Background:
-    Given The Moderator is logged in with moderator role
-    And The review queue is open with pending reports
+    Given the Moderator is logged in with the Moderator role
 
   @uc5-feature
-  Scenario Outline: Successfully approve a pending aid need
-    When The Moderator selects the report with title <title>
-    And The Moderator reviews the details and evidence
-    And The Moderator clicks the Approve button
-    And The Moderator confirms the approval
-    Then The report status is set to Verified
-    And The aid need is published on the map
-    And A notification is sent to the Reporter
+  Scenario Outline: Basic flow - approve a pending need
+    Given the need "<description>" has the status "Pending Review"
+    When the Moderator opens the review queue
+    Then the review queue lists the need "<description>"
+    When the Moderator selects the need "<description>"
+    Then the system shows the details, the evidence and the location of the need
+    When the Moderator approves the need
+    Then the need "<description>" now has the status "Verified"
+    And the need is published on the map
+    And the Reporter is notified that the need was approved
+    And the decision is logged with the Moderator and the time
 
-    Examples: Approved Reports
-      | title                   |
-      | Food and water needed   |
-      | Medical supplies        |
-
-  @uc5-feature
-  Scenario Outline: Reject a pending aid need with a reason
-    When The Moderator selects the report with title <title>
-    And The Moderator clicks the Reject button
-    And The Moderator selects <reason> as rejection reason
-    And The Moderator enters <explanation> as additional explanation
-    And The Moderator clicks Confirm Reject
-    Then The report status is set to Rejected
-    And The rejection reason is saved
-    And The aid need is not published on the map
-    And A notification with the reason is sent to the Reporter
-
-    Examples: Rejected Reports
-      | title              | reason              | explanation                   |
-      | Education materials| Incomplete evidence | Photos do not show clear proof|
-      | Fake Report Sample | Spam or Fraudulent  | This is a duplicate submission|
+    Examples: Approved needs
+      | description              |
+      | Food and water needed    |
+      | Medical supplies         |
 
   @uc5-feature
-  Scenario: Attempting to reject a report without a reason
-    When The Moderator selects a pending report
-    And The Moderator clicks the Reject button
-    And The Moderator leaves the rejection reason empty
-    And The Moderator clicks Confirm Reject
-    Then The system asks for a reason and does not continue
+  Scenario Outline: A1 - Moderator rejects the need with a reason
+    Given the need "<description>" has the status "Pending Review"
+    When the Moderator opens the review queue
+    And the Moderator selects the need "<description>"
+    And the Moderator rejects the need with the reason "<reason>"
+    Then the need "<description>" now has the status "Rejected"
+    And the reason "<reason>" is saved
+    And the need is not published on the map
+    And the Reporter is notified of the rejection with the reason "<reason>"
+    And the decision is logged with the Moderator and the time
+
+    Examples: Rejected needs
+      | description         | reason                           |
+      | Education materials | Photos do not show clear proof   |
+      | Fake Report Sample  | Duplicate submission             |
+
+  @uc5-feature
+  Scenario: A2 - Rejection reason missing, then entered
+    Given the need "Roof damaged" has the status "Pending Review"
+    When the Moderator opens the review queue
+    And the Moderator selects the need "Roof damaged"
+    And the Moderator rejects the need without a reason
+    Then the system asks for a reason and does not continue
+    And the need "Roof damaged" now has the status "Pending Review"
+    When the Moderator rejects the need with the reason "Evidence does not match"
+    Then the need "Roof damaged" now has the status "Rejected"
+
+  @uc5-feature
+  Scenario: A3 - Need already handled by another Moderator
+    Given the need "Water pump broken" has the status "Pending Review"
+    And the need "School supplies" has the status "Pending Review"
+    And the Moderator has selected the need "Water pump broken"
+    And another Moderator has already processed the need "Water pump broken"
+    When the Moderator approves the need
+    Then the system informs the Moderator that the need has already been processed
+    And the review queue is refreshed
+    And the review queue no longer lists the need "Water pump broken"
+    And the review queue lists the need "School supplies"

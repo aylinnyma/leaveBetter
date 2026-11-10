@@ -149,7 +149,7 @@ Every user must register before using the platform, so that each report, flag an
 ##### 3.1.2 Log in (UC13)
 Registered users log in to use the platform. Moderators log in with moderator privileges.
 
-##### 3.1.3 Submit aid need (UC1)
+##### [3.1.3 Submit aid need (UC1)](docs/use-cases/UC01-submit-aid-need-with-evidence.md)
 This is the core feature of the platform. A reporter submits an aid request. The user chooses a category (such as water, education, or health), sets the urgency level, enters a description, and sets the location. New requests get the status Pending Review.
 
 ##### 3.1.4 Upload verification photo (UC2)
@@ -161,7 +161,7 @@ When creating a report, the location must be specified. The system uses the Goog
 ##### 3.1.6 Review pending and flagged reports (UC4)
 To prevent scams and inaccurate information, all new reports enter a review queue. Reports flagged by users also appear in this queue. Moderators inspect the details before a report is shown publicly or while it is under review.
 
-##### 3.1.7 Validate need (UC5)
+##### [3.1.7 Validate need (UC5)](docs/use-cases/UC05-validate-need.md)
 A moderator checks the report description and photo. If valid, the moderator marks the request as Verified and it becomes visible on the public map. If the moderator checks a flagged report and finds it genuine, the flag is dismissed and the "Under review" marker disappears.
 
 ##### 3.1.8 Browse needs on map (UC7)
