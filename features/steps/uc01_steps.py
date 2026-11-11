@@ -90,7 +90,6 @@ def step_saved(context, description, status):
 
 @then('the aid need is not visible on the public map')
 def step_not_visible(context):
-    # Only Verified needs appear on the public map
     assert context.need["status"] != "Verified"
 
 
