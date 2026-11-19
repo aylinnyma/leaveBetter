@@ -17,7 +17,7 @@ Geotag location on map
 
 ### 1.1 Brief Description
 
-During the creation of an aid need report (UC1), a logged-in Reporter specifies the exact geographical location of the need by searching for an address/place or dragging a pin on an interactive map[cite: 5, 6]. The system resolves the address into valid latitude and longitude coordinates using the Google Geocoding API, displays the resolved address and pin for confirmation, and attaches the coordinates to the report.
+During the creation of an aid need report (UC1), a logged-in Reporter specifies the exact geographical location of the need by searching for an address/place or dragging a pin on an interactive map. The system resolves the address into valid latitude and longitude coordinates using the Google Geocoding API, displays the resolved address and pin for confirmation, and attaches the coordinates to the report.
 
 Behavior as executable scenarios: [UC3 feature file](../features/UC03_geotag_location.feature)
 
@@ -61,9 +61,9 @@ Behavior as executable scenarios: [UC3 feature file](../features/UC03_geotag_loc
 
 ## 3. Special Requirements
 
-- **Data Integrity:** Every aid need report must have valid geographical coordinates (latitude and longitude) before it can be saved (per SRS 3.3.2).
-- **Performance:** The interactive map must load and render smoothly within 2 seconds on a standard mobile connection (per SRS 3.4.1).
-- **External Interface:** Uses Google Maps JavaScript API for map rendering and Google Geocoding API for coordinate/address resolution over HTTPS (per SRS 3.9.3 & 3.9.4).
+- **Data Integrity:** Every aid need report must have valid geographical coordinates (latitude and longitude) before it can be saved .
+- **Performance:** The interactive map must load and render smoothly within 2 seconds on a standard mobile connection.
+- **External Interface:** Uses Google Maps JavaScript API for map rendering and Google Geocoding API for coordinate/address resolution over HTTPS .
 
 ## 4. Preconditions
 
