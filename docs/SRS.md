@@ -107,7 +107,10 @@ Inspired by mutual-aid networks and responsible travel ideas, LeaveBetter connec
 | ID  | Use Case                         | CRUD   | Link                                                      |
 |-----|----------------------------------|--------|-----------------------------------------------------------|
 | UC1 | Submit aid need with evidence    | Create | [UC1](use-cases/UC01-submit-aid-need-with-evidence.md)    |
+| UC3 | Geotag location on map           | Create | [UC3](use-cases/UC3-geotag-location-on-map.md)           |
 | UC5 | Validate need                    | Update | [UC5](use-cases/UC05-validate-need.md)                    |
+| UC7 | Browse needs on map              | Read   | [UC7](use-cases/UC07-browse-needs-on-map.md)              |
+| UC9 | Offer aid commitment             | Create | [UC9](use-cases/UC09-offer-aid-commitment.md)            |
 
 ### 2.4 Technology Stack
 The platform uses the following technologies:
@@ -155,7 +158,7 @@ This is the core feature of the platform. A reporter submits an aid request. The
 ##### 3.1.4 Upload verification photo (UC2)
 When submitting an aid request, the reporter can optionally attach an image as proof. This helps moderators verify that the request is genuine.
 
-##### 3.1.5 Geotag location on map (UC3)
+##### [3.1.5 Geotag location on map (UC3)](docs/use-cases/UC3-geotag-location-on-map.md)
 When creating a report, the location must be specified. The system uses the Google Maps API to convert an address into coordinates and to place a pin accurately on the map. If this fails, the user picks the location manually on the map.
 
 ##### 3.1.6 Review pending and flagged reports (UC4)
@@ -164,7 +167,7 @@ To prevent scams and inaccurate information, all new reports enter a review queu
 ##### [3.1.7 Validate need (UC5)](docs/use-cases/UC05-validate-need.md)
 A moderator checks the report description and photo. If valid, the moderator marks the request as Verified and it becomes visible on the public map. If the moderator checks a flagged report and finds it genuine, the flag is dismissed and the "Under review" marker disappears.
 
-##### 3.1.8 Browse needs on map (UC7)
+##### [3.1.8 Browse needs on map (UC7)](docs/use-cases/UC07-browse-needs-on-map.md)
 Every logged-in user can open the interactive map to see active needs. A user can be a Reporter and a Volunteer at the same time. Clicking a pin opens a summary card with details.
 
 #### Extended features:
@@ -178,7 +181,7 @@ If a moderator confirms that a report is fraudulent, a duplicate or violates the
 ##### 3.1.11 Filter by urgency and category (UC8)
 Users can filter map markers by category (e.g., only "Clean water") or urgency (e.g., "Critical") to find relevant requests quickly.
 
-##### 3.1.12 Offer aid commitment (UC9)
+##### ##### [3.1.12 Offer aid commitment (UC9)](docs/use-cases/UC09-offer-aid-commitment.md)
 A user can click an "Offer Aid" button on a verified request to state what supplies or time they can provide, notifying the Reporter. A user cannot offer aid on their own request. If the request is marked "Under review", the system first shows a warning message and the user must confirm before continuing.
 
 ##### 3.1.13 Update fulfillment status (UC10)
