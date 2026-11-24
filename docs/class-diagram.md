@@ -1,6 +1,7 @@
 # LeaveBetter — Class Diagram
 
-Covers all use cases from the SRS (UC1–UC14).  
+Covers all use cases from the SRS (UC1–UC14).
+Will be used for the development process of the Django backend .
 Rendered with [Mermaid](https://mermaid.live) — paste the block below into mermaid.live to view it.
 
 ```mermaid
