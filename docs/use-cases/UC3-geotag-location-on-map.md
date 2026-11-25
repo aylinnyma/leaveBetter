@@ -5,12 +5,6 @@
 **Supporting systems:** Google Maps JavaScript API & Geocoding API
 **Included by:** [UC1: Submit aid need with evidence](UC01-submit-aid-need-with-evidence.md)
 
-## Revision History
-
-| Version | Date       | Description   | Author |
-|---------|------------|---------------|--------|
-| 0.1     | 2026-11-17 | Initial draft | Dina   |
-
 ## 1. Use-Case Name
 
 Geotag location on map

@@ -5,12 +5,6 @@
 **Supporting systems:** none directly (geolocation is handled in UC3)
 **Includes:** [UC3: Geotag location on map](UC03-geotag-location-on-map.md)
 
-## Revision History
-
-| Version | Date       | Description   | Author |
-|---------|------------|---------------|--------|
-| 0.1     | 2026-10-27 | Initial draft | Aylin |
-| 0.2     | 2026-11-04 | Brief description update| Aylin |
 
 ## 1. Use-Case Name
 

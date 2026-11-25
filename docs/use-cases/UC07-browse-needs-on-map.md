@@ -5,12 +5,6 @@
 **Supporting systems:** Google Maps JavaScript API
 **Extends / Leads to:** [UC8: Filter by category and urgency](UC08-filter-by-category-and-urgency.md), [UC9: Offer aid commitment](UC09-offer-aid-commitment.md)
 
-## Revision History
-
-| Version | Date       | Description   | Author |
-|---------|------------|---------------|--------|
-| 0.1     | 2026-11-18 | Initial draft | Dina   |
-
 ## 1. Use-Case Name
 
 Browse needs on map
