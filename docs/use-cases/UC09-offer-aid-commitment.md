@@ -5,12 +5,6 @@
 **Supporting systems:** none
 **Extended from:** [UC7: Browse needs on map](UC07-browse-needs-on-map.md)
 
-## Revision History
-
-| Version | Date       | Description   | Author |
-|---------|------------|---------------|--------|
-| 0.1     | 2026-11-19 | Initial draft | Dina   |
-
 ## 1. Use-Case Name
 
 Offer aid commitment

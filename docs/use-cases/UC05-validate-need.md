@@ -4,13 +4,6 @@
 **Primary actor:** Moderator
 **Related use cases:** [UC1](UC01-submit-aid-need-with-evidence.md) (creates the pending need), UC7 (shows verified needs on the map)
 
-## Revision History
-
-| Version | Date       | Description   | Author |
-|---------|------------|---------------|--------|
-| 0.1     | 2026-10-27 | Initial draft | Aylin |
-| 0.2     | 2026-04-11 | Brief description update| Aylin |
-
 ## 1. Use-Case Name
 
 Validate need
@@ -19,7 +12,7 @@ Validate need
 
 A Moderator reviews needs with the status "Pending Review" and either approves them (status "Verified", published on the map) or rejects them with a reason (status "Rejected", not published). The Reporter is notified of the decision, and every decision is logged.
 
-Behavior as executable scenarios: [UC5 feature file](../features/UC05_validate_need.feature)
+Behavior as executable scenarios: [UC5 feature file](/features/UC05_validate_need.feature)
 
 ## 2. Flow of Events
 
