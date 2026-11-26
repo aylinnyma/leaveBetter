@@ -1,0 +1,21 @@
+@startuml
+skinparam shadowing false
+rectangle "Frontend (browser)\nmap and forms" as fe
+
+rectangle "Django backend" {
+  rectangle "urls.py\n(routing)" as urls
+  rectangle "CONTROLLER\nviews.py / viewsets" as ctl
+  rectangle "VIEW (data format)\nserializers.py" as ser
+  rectangle "MODEL\nmodels.py (ORM)" as mdl
+}
+
+database "SQLite\ndb.sqlite3" as db
+cloud "Google Maps API" as gm
+
+fe --> urls : HTTP request (JSON)
+urls --> ctl : route
+ctl --> ser : validate / convert
+ctl --> mdl : create, read, update
+mdl --> db : SQL via ORM
+fe ..> gm : map display
+@enduml

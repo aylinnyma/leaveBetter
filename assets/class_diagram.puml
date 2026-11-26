@@ -1,0 +1,130 @@
+@startuml
+skinparam shadowing false
+skinparam nodesep 50
+skinparam ranksep 70
+hide empty members
+
+package "VIEW (planned): serializers + frontend" #E8F0FE {
+  class NeedSerializer
+  class CommitmentSerializer
+  class "Frontend (map UI)" as Frontend
+}
+
+package "CONTROLLER (planned): views.py" #FFF4E0 {
+  class NeedViewSet
+  class ModerationViewSet
+  class CommitmentViewSet
+  class AuthViews
+}
+
+package "MODEL: models.py" #E9F7EC {
+
+  enum StatusEnum {
+    Pending Review
+    Verified
+    In Progress
+    Resolved
+    Rejected
+  }
+  enum CategoryEnum {
+    Water
+    Food
+    Education
+    Health
+    Construction
+    Other
+  }
+  enum UrgencyEnum {
+    Critical
+    High
+    Medium
+    Low
+  }
+  enum DecisionEnum {
+    approved
+    rejected
+  }
+  enum CommitmentStatusEnum {
+    Offered
+    Completed
+    Cancelled
+  }
+
+  class User {
+    +int id
+    +String username
+    +String email
+    +String password
+    +bool is_active
+    +bool is_blocked
+    +DateTime created_at
+    +register()
+    +login()
+  }
+  class Profile {
+    +int id
+    +bool is_moderator
+    +String phone_number
+  }
+  class AidNeed {
+    +int id
+    +String title
+    +String description
+    +CategoryEnum category
+    +UrgencyEnum urgency
+    +StatusEnum status
+    +float latitude
+    +float longitude
+    +File evidence
+    +bool is_flagged
+    +DateTime created_at
+    +DateTime updated_at
+    +submit()
+    +cancel()
+  }
+  class ModerationLog {
+    +int id
+    +DecisionEnum decision
+    +String reason
+    +DateTime logged_at
+  }
+  class Flag {
+    +int id
+    +String reason
+    +DateTime created_at
+  }
+  class AidCommitment {
+    +int id
+    +String message
+    +CommitmentStatusEnum status
+    +DateTime created_at
+    +offerAid()
+    +updateStatus()
+  }
+  class BlockedUser {
+    +int id
+    +String email_hash
+    +String phone_hash
+    +DateTime blocked_at
+    +String reason
+  }
+
+  User "1" -- "0..1" Profile : has
+  User "1" -- "0..*" AidNeed : reports
+  User "1" -- "0..*" ModerationLog : moderates
+  User "1" -- "0..*" Flag : raises
+  User "1" -- "0..*" AidCommitment : volunteers
+  User "1" -- "0..*" BlockedUser : blocks
+  AidNeed "1" -- "0..*" ModerationLog : reviewed in
+  AidNeed "1" -- "0..*" Flag : flagged by
+  AidNeed "1" -- "0..*" AidCommitment : fulfilled by
+}
+
+Frontend ..> NeedViewSet : HTTP / JSON
+NeedViewSet ..> NeedSerializer
+CommitmentViewSet ..> CommitmentSerializer
+NeedViewSet ..> AidNeed
+ModerationViewSet ..> ModerationLog
+CommitmentViewSet ..> AidCommitment
+AuthViews ..> User
+@enduml

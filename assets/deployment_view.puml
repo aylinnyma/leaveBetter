@@ -1,0 +1,24 @@
+@startuml
+skinparam shadowing false
+
+node "Player device" <<device>> {
+  node "Web browser" <<executionEnvironment>> {
+    artifact "LeaveBetter frontend (map UI)" as fe
+  }
+}
+
+node "Server host" <<device>> {
+  node "Django runtime" <<executionEnvironment>> {
+    artifact "leavebetter backend (Django + DRF)" as be
+  }
+  database "db.sqlite3" as db
+  folder "media/ (evidence photos)" as media
+}
+
+cloud "Google Maps API" as gm <<external system>>
+
+fe --> be : HTTP / JSON (REST)
+be --> db : ORM
+be --> media : file storage
+fe --> gm : Maps API
+@enduml

@@ -76,7 +76,7 @@ Views used in this document: **Use-Case View** (Section 4), **Logical View** (Se
 | Evidence photos | `Pillow` + `MEDIA_ROOT` | Stores uploaded evidence in the `media` folder; the database stores only the file path. |
 | Map | Google Maps API (external system) | Shows needs on a map and geotags locations. |
 | Tests | `behave` (Cucumber for Python) | Gherkin feature files, currently for UC1 and UC5. |
-| Frontend | `[TO DO: confirm frontend technology]` | Map and forms in the browser. |
+| Frontend | `React, HTML5, CSS3, JavaScript (ES6+)` | Map and forms in the browser. |
 
 ### 3.2 CRUD
 
@@ -118,7 +118,7 @@ The system covers UC1 to UC14. Actors: Reporter, Volunteer, Moderator.
 | UC13 | Log in | `User` |
 | UC14 | Block user | `BlockedUser`, `User`, `Profile` (moderator role) |
 
-`[TO DO: embed the overall use case diagram here]`
+![Overall Use Case Diagram](../assets/useCase_highlight.webp)
 
 ---
 
@@ -128,166 +128,10 @@ The system covers UC1 to UC14. Actors: Reporter, Volunteer, Moderator.
 
 The backend is a Django project with a layered flow: a request enters through `urls.py`, is handled by a controller, validated by a serializer, and uses a model that reads and writes the database. The frontend talks to the backend over HTTP with JSON, and to Google Maps directly.
 
-```plantuml
-@startuml
-skinparam shadowing false
-rectangle "Frontend (browser)\nmap and forms" as fe
-
-rectangle "Django backend" {
-  rectangle "urls.py\n(routing)" as urls
-  rectangle "CONTROLLER\nviews.py / viewsets" as ctl
-  rectangle "VIEW (data format)\nserializers.py" as ser
-  rectangle "MODEL\nmodels.py (ORM)" as mdl
-}
-
-database "SQLite\ndb.sqlite3" as db
-cloud "Google Maps API" as gm
-
-fe --> urls : HTTP request (JSON)
-urls --> ctl : route
-ctl --> ser : validate / convert
-ctl --> mdl : create, read, update
-mdl --> db : SQL via ORM
-fe ..> gm : map display
-@enduml
-```
 
 ### 5.2 Architecturally Significant Design Packages
 
 The class diagram below shows the **Model** classes (the 7 classes of the design). The **Controller** and **View** parts are planned and not written yet; their names are proposals.
-
-```plantuml
-@startuml
-skinparam shadowing false
-skinparam nodesep 50
-skinparam ranksep 70
-hide empty members
-
-package "VIEW (planned): serializers + frontend" #E8F0FE {
-  class NeedSerializer
-  class CommitmentSerializer
-  class "Frontend (map UI)" as Frontend
-}
-
-package "CONTROLLER (planned): views.py" #FFF4E0 {
-  class NeedViewSet
-  class ModerationViewSet
-  class CommitmentViewSet
-  class AuthViews
-}
-
-package "MODEL: models.py" #E9F7EC {
-
-  enum StatusEnum {
-    Pending Review
-    Verified
-    In Progress
-    Resolved
-    Rejected
-  }
-  enum CategoryEnum {
-    Water
-    Food
-    Education
-    Health
-    Construction
-    Other
-  }
-  enum UrgencyEnum {
-    Critical
-    High
-    Medium
-    Low
-  }
-  enum DecisionEnum {
-    approved
-    rejected
-  }
-  enum CommitmentStatusEnum {
-    Offered
-    Completed
-    Cancelled
-  }
-
-  class User {
-    +int id
-    +String username
-    +String email
-    +String password
-    +bool is_active
-    +bool is_blocked
-    +DateTime created_at
-    +register()
-    +login()
-  }
-  class Profile {
-    +int id
-    +bool is_moderator
-    +String phone_number
-  }
-  class AidNeed {
-    +int id
-    +String title
-    +String description
-    +CategoryEnum category
-    +UrgencyEnum urgency
-    +StatusEnum status
-    +float latitude
-    +float longitude
-    +File evidence
-    +bool is_flagged
-    +DateTime created_at
-    +DateTime updated_at
-    +submit()
-    +cancel()
-  }
-  class ModerationLog {
-    +int id
-    +DecisionEnum decision
-    +String reason
-    +DateTime logged_at
-  }
-  class Flag {
-    +int id
-    +String reason
-    +DateTime created_at
-  }
-  class AidCommitment {
-    +int id
-    +String message
-    +CommitmentStatusEnum status
-    +DateTime created_at
-    +offerAid()
-    +updateStatus()
-  }
-  class BlockedUser {
-    +int id
-    +String email_hash
-    +String phone_hash
-    +DateTime blocked_at
-    +String reason
-  }
-
-  User "1" -- "0..1" Profile : has
-  User "1" -- "0..*" AidNeed : reports
-  User "1" -- "0..*" ModerationLog : moderates
-  User "1" -- "0..*" Flag : raises
-  User "1" -- "0..*" AidCommitment : volunteers
-  User "1" -- "0..*" BlockedUser : blocks
-  AidNeed "1" -- "0..*" ModerationLog : reviewed in
-  AidNeed "1" -- "0..*" Flag : flagged by
-  AidNeed "1" -- "0..*" AidCommitment : fulfilled by
-}
-
-Frontend ..> NeedViewSet : HTTP / JSON
-NeedViewSet ..> NeedSerializer
-CommitmentViewSet ..> CommitmentSerializer
-NeedViewSet ..> AidNeed
-ModerationViewSet ..> ModerationLog
-CommitmentViewSet ..> AidCommitment
-AuthViews ..> User
-@enduml
-```
 
 **How to read the relationships.** The numbers are multiplicities. Example: Maria (user #3) has reported 5 needs, so `User "1" -- "0..*" AidNeed` means one user has zero or many needs, and each need has exactly one reporter. The foreign key is always stored on the "many" side: `AidCommitment` holds `need_id`, so three volunteers on need #17 are three rows that all contain `need_id = 17`.
 
@@ -327,33 +171,6 @@ AuthViews ..> User
 
 ## 7. Deployment View
 
-```plantuml
-@startuml
-skinparam shadowing false
-
-node "Player device" <<device>> {
-  node "Web browser" <<executionEnvironment>> {
-    artifact "LeaveBetter frontend (map UI)" as fe
-  }
-}
-
-node "Server host" <<device>> {
-  node "Django runtime" <<executionEnvironment>> {
-    artifact "leavebetter backend (Django + DRF)" as be
-  }
-  database "db.sqlite3" as db
-  folder "media/ (evidence photos)" as media
-}
-
-cloud "Google Maps API" as gm <<external system>>
-
-fe --> be : HTTP / JSON (REST)
-be --> db : ORM
-be --> media : file storage
-fe --> gm : Maps API
-@enduml
-```
-
 - **Player device (1..\*):** a browser that runs the frontend.
 - **Server host (1):** runs the Django backend, the SQLite file and the `media` folder. In development this is the local Django development server.
 - **Google Maps API:** external system used for the map and geotagging.
@@ -372,111 +189,7 @@ No public server is deployed yet. For a public deployment, HTTPS would be requir
 
 ### 9.1 EER Diagram
 
-```plantuml
-@startuml
-hide circle
-skinparam shadowing false
-skinparam nodesep 70
-skinparam ranksep 90
-
-entity "User" as user {
-  * id : bigint <<PK>>
-  --
-  * username : varchar(150) <<unique>>
-  * email : varchar(254)
-  * password : varchar(128)
-  * is_active : boolean
-  * is_blocked : boolean
-  * created_at : datetime
-}
-
-entity "Profile" as profile {
-  * id : bigint <<PK>>
-  --
-  * user_id : bigint <<FK, unique>>
-  * is_moderator : boolean
-  phone_number : varchar(30)
-}
-
-entity "AidNeed" as need {
-  * id : bigint <<PK>>
-  --
-  * reporter_id : bigint <<FK>>
-  * title : varchar(200)
-  * description : text
-  * category : varchar(20)
-  * urgency : varchar(20)
-  * status : varchar(20)
-  * latitude : double
-  * longitude : double
-  evidence : varchar(255)
-  * is_flagged : boolean
-  * created_at : datetime
-  * updated_at : datetime
-}
-
-entity "ModerationLog" as modlog {
-  * id : bigint <<PK>>
-  --
-  * need_id : bigint <<FK>>
-  * moderator_id : bigint <<FK>>
-  * decision : varchar(10)
-  reason : text
-  * logged_at : datetime
-}
-
-entity "Flag" as flag {
-  * id : bigint <<PK>>
-  --
-  * need_id : bigint <<FK>>
-  * reporter_id : bigint <<FK>>
-  * reason : text
-  * created_at : datetime
-}
-
-entity "AidCommitment" as commit {
-  * id : bigint <<PK>>
-  --
-  * need_id : bigint <<FK>>
-  * volunteer_id : bigint <<FK>>
-  message : text
-  * status : varchar(20)
-  * created_at : datetime
-}
-
-entity "BlockedUser" as blocked {
-  * id : bigint <<PK>>
-  --
-  * email_hash : varchar(64)
-  phone_hash : varchar(64)
-  * blocked_by_id : bigint <<FK>>
-  * blocked_at : datetime
-  reason : text
-}
-
-user    ||-right-o{ need    : reports
-user    ||-down-o{  modlog  : moderates
-need    ||-down-o{  modlog  : reviewed in
-user    ||-up-o|    profile : has
-user    ||-left-o{  blocked : blocks
-need    ||-up-o{    flag    : flagged by
-need    ||-right-o{ commit  : fulfilled by
-user    ||--o{      flag    : raises
-user    ||--o{      commit  : volunteers
-
-note bottom of need
-  category: Water, Food, Education,
-  Health, Construction, Other
-  urgency: Critical, High, Medium, Low
-  status: Pending Review, Verified,
-  In Progress, Resolved, Rejected
-end note
-
-note bottom of commit
-  status: Offered, Completed, Cancelled
-end note
-@enduml
-```
+...
 
 ### 9.2 Class-to-Table Mapping
 
