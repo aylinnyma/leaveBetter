@@ -1,7 +1,7 @@
 # LeaveBetter — Software Architecture Document
 
 **Version:** 0.1 (draft)
-**Status:** Design baseline, 22 November 2026. The class and database designs are agreed; application implementation has not started yet. Items marked `[TO DO]` are still missing.
+**Status:** Design baseline, 22 November 2026. The class and database designs are agreed; application implementation has not started yet.
 **Course:** Software Engineering I
 
 ---
@@ -59,7 +59,12 @@ LeaveBetter uses the **Model–View–Controller** pattern. The backend is built
 
 Example: Maria submits an aid need. The frontend sends the request, `urls.py` routes it, the controller checks it, the serializer validates the fields, the model saves one `AidNeed` row with status *Pending Review*, and a JSON answer goes back.
 
-Views used in this document: **Use-Case View** (Section 4), **Logical View** (Section 5), **Deployment View** (Section 7) and **Data View** (Section 9). The Process and Implementation views are not needed yet.
+Views used in this document: 
+  - **Use-Case View** (Section 4)
+  - **Logical View** (Section 5)
+  - **Deployment View** (Section 7)
+  - **Data View** (Section 9).
+  - The Process and Implementation views are not needed yet.
 
 ---
 
@@ -127,7 +132,6 @@ The system covers UC1 to UC14. Actors: Reporter, Volunteer, Moderator.
 ### 5.1 Overview
 
 The backend is a Django project with a layered flow: a request enters through `urls.py`, is handled by a controller, validated by a serializer, and uses a model that reads and writes the database. The frontend talks to the backend over HTTP with JSON, and to Google Maps directly.
-
 
 ### 5.2 Architecturally Significant Design Packages
 
