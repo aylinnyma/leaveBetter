@@ -133,9 +133,13 @@ The system covers UC1 to UC14. Actors: Reporter, Volunteer, Moderator.
 
 The backend is a Django project with a layered flow: a request enters through `urls.py`, is handled by a controller, validated by a serializer, and uses a model that reads and writes the database. The frontend talks to the backend over HTTP with JSON, and to Google Maps directly.
 
+![Backend View](../assets/backend_diagram.png)
+
 ### 5.2 Architecturally Significant Design Packages
 
 The class diagram below shows the **Model** classes (the 7 classes of the design). The **Controller** and **View** parts are planned and not written yet; their names are proposals.
+
+![MVC Architecture Diagram](../assets/mvc_diagram.png)
 
 **How to read the relationships.** The numbers are multiplicities. Example: Maria (user #3) has reported 5 needs, so `User "1" -- "0..*" AidNeed` means one user has zero or many needs, and each need has exactly one reporter. The foreign key is always stored on the "many" side: `AidCommitment` holds `need_id`, so three volunteers on need #17 are three rows that all contain `need_id = 17`.
 
@@ -179,6 +183,8 @@ The class diagram below shows the **Model** classes (the 7 classes of the design
 - **Server host (1):** runs the Django backend, the SQLite file and the `media` folder. In development this is the local Django development server.
 - **Google Maps API:** external system used for the map and geotagging.
 
+![Deployment View](../assets/deployment_view.png)
+
 No public server is deployed yet. For a public deployment, HTTPS would be required.
 
 ---
@@ -193,7 +199,7 @@ No public server is deployed yet. For a public deployment, HTTPS would be requir
 
 ### 9.1 EER Diagram
 
-...
+![EER Diagram](../assets/eer_diagram.png)
 
 ### 9.2 Class-to-Table Mapping
 
@@ -220,14 +226,3 @@ No public server is deployed yet. For a public deployment, HTTPS would be requir
 ## 11. Quality
 
 **N/A** at this stage. Relevant qualities for later: security (hashed passwords, hashed blocking data, moderation before publication) and testability (Gherkin feature files with `behave`).
-
----
-
-## Open Questions
-
-- **Title and urgency in UC1:** the class diagram has `title` and `urgency`, but UC1 v0.1 only asks for description, category and evidence. Either UC1 asks for them, or a moderator sets urgency during review. `[TO DO: decide and align UC1 and the diagram]`
-- **Frontend technology:** `[TO DO: confirm]`
-- **One commitment per volunteer per need?** Possible unique constraint on `(need_id, volunteer_id)`. `[TO DO: decide]`
-- **Django app structure:** one app or several (for example accounts, needs, moderation). `[TO DO: agree with the team]`
-- **Naming convention** shared by diagrams and code. `[TO DO: agree with the team]`
-- **Overlay with the diagram generated from code:** possible after the models exist. `[TO DO]`
